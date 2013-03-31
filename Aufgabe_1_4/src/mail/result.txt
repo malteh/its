@@ -1,0 +1,8 @@
+com.sun.mail.smtp.SMTPSendFailedException: 530 5.7.1 Client was not authenticated
+
+	at com.sun.mail.smtp.SMTPTransport.issueSendCommand(SMTPTransport.java:2108)
+	at com.sun.mail.smtp.SMTPTransport.mailFrom(SMTPTransport.java:1609)
+	at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:1117)
+	at javax.mail.Transport.send0(Transport.java:195)
+	at javax.mail.Transport.send(Transport.java:124)
+	at mail.Mail.main(Mail.java:75)
