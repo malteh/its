@@ -6,38 +6,30 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class Scanner implements Runnable {
-
-	public Scanner(String[] args)  {
-		String host;
-		Integer startport;
-		Integer endport;
-
-		if (args[0] != null && args[1] != null && args[2] != null) {
-
-			host = args[0];
-			startport = Integer.parseInt(args[1]);
-			endport = Integer.parseInt(args[2]);
-			for (int port = startport; startport <= endport; port++) {
-				Socket socket =  null;
-				try {
-					socket = new Socket(host, port);
-					System.out.println("Port:" + port + " erreichbar.");
-				} catch (IOException e) {
-					System.out.println("Port:" + port + " nicht erreichbar.");
-				} finally {
-					try {
-						socket.close();
-					} catch (Exception e) {
-					}
-				}
-			}
-
-		}
+	private String host;
+	private Integer port;
+	private Socket socket;
+	
+	public Scanner(String host, Integer port)  
+	{
+		this.host = host;
+		this.port = port;
+		Socket socket =  null;
 	}
 
 	public void run() {
-		// TODO Auto-generated method stub
-
+		try {
+			socket = new Socket(host, port);
+			System.out.println("Host: " + host + " Port:" + port + " erreichbar.");
+		} catch (IOException e) {
+			System.out.println("Host: " + host + " Port:" + port + " nicht erreichbar.");
+		} finally {
+			try {
+				socket.close();
+				
+			} catch (Exception e) {
+			}
+		}
 	}
 
 }
