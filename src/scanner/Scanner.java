@@ -20,9 +20,9 @@ public class Scanner implements Runnable {
 	public void run() {
 		try {
 			socket = new Socket(host, port);
-			System.out.println("Host: " + host + " Port:" + port + " erreichbar.");
+			System.out.println("Host: " + host + " Port:" + port + " ++++++++++++++++");
 		} catch (IOException e) {
-			System.out.println("Host: " + host + " Port:" + port + " nicht erreichbar.");
+			System.out.println("Host: " + host + " Port:" + port + " ----------------");
 		} finally {
 			try {
 				socket.close();

@@ -22,7 +22,7 @@ public class Portscan {
 		Integer startport;
 		Integer endport;
 
-		System.out.println(args.length);
+		//System.out.println(args.length);
 		
 		
 		if (args.length<2) {
