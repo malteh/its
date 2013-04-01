@@ -1,2 +1,3 @@
 http://www-rn.informatik.uni-bremen.de/lehre/itsec/itsec05-2u.pdf
 http://insecure.org/stf/smashstack.html
+http://www.online-tutorials.net/security/buffer-overflow-tutorial-teil-1-grundlagen/tutorials-t-27-282.html
