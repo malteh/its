@@ -1,8 +1,6 @@
 #include<stdio.h>
 
 void exploit(char *InputString);
-void init();
-
 const bufSize = 5;
 
 int main(void)
@@ -36,7 +34,7 @@ void exploit(char *InputString) {
 	// kopieren InputString -> buf2
 	strcpy (buf2,InputString);
 	
-	// 
+	// Test nach dem Kopieren:
 	printf("2nd check:\n");
 	printf("buf1:{%s}; len: %d; size %schanged\n",buf1, strlen(buf1), (strlen(buf1)==bufSize)?"not ":"");
 	printf("buf2:{%s}; len: %d\n",buf2, strlen(buf2));

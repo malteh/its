@@ -1,0 +1,2 @@
+http://www-rn.informatik.uni-bremen.de/lehre/itsec/itsec05-2u.pdf
+http://insecure.org/stf/smashstack.html
