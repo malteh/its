@@ -23,8 +23,8 @@ void exploit(char *InputString) {
 	char buf1[bufSize];
 	char buf2[bufSize];
 	
-	strcpy (buf1,"XXXXX");		/* Initialisierung mit Konstante */
-	strcpy (buf2,"XXXXX");		/* Initialisierung mit Konstante */
+	strcpy (buf1,"AAAAA");		/* Initialisierung mit Konstante */
+	strcpy (buf2,"AAAAA");		/* Initialisierung mit Konstante */
 	
 	// prüfen, ob alles OK ist:
 	printf("1st check:\n");

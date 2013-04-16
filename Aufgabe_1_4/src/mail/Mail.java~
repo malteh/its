@@ -2,11 +2,8 @@ package mail;
 
 import java.util.Properties;
 
-import javax.mail.Address;
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -33,7 +30,7 @@ public class Mail {
 		if (args.length == 0) {
 			server = "haw-mailer.haw-hamburg.de";
 			from = "donald.duck@disneyland.de";
-			to = "malte.heidenreich@haw-hamburg.de";
+			to = "";
 			text = "TESTMAIL FROM DISNEYLAND";
 		} else {
 			server = args[0];
@@ -51,7 +48,8 @@ public class Mail {
 		properties.setProperty("mail.smtp.host", server);
 		
 		// Add Currect Haw Port Number
-		properties.setProperty("mail.smtp.port",port);		
+		properties.setProperty("mail.smtp.port",port);
+		
 
 		// Get the default Session object.
 		Session session = Session.getDefaultInstance(properties);
@@ -74,18 +72,10 @@ public class Mail {
 			message.setText(text);
 
 			// Send message
-			Transport tr = session.getTransport("smtp");
-			tr.connect(server, "abd868", "pass");
-			Address[] ad = message.getAllRecipients();
-			
-			tr.sendMessage(message, ad);
-			
-			tr.close();
-			
+			Transport.send(message);
 			System.out.println("Sent message successfully....");
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
 	}
 }
-
