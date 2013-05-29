@@ -1,8 +1,12 @@
 package de.haw.its;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
+import java.security.KeyFactory;
+import java.security.SecureRandom;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,34 +16,54 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class SSF {
-    public static void main(String[] args)
-    {
-       if (args.length<6)
-       {
-           System.err.print("Falsche Anzahl an Parametern 6 erwartet.");
-           System.exit(1);
-       }
+    public static void main(String[] args) {
+        if (args.length < 6) {
+            System.err.print("Falsche Anzahl an Parametern 6 erwartet.");
+            System.exit(1);
+        }
+
+        byte[] private_key = readkey(args[1]);
+        byte[] public_key = readkey(args[2]);
+        byte[] aes_key = createAES().getEncoded();
+        byte[] signature = createSignature(aes_key);
+
 
 
     }
 
-    public byte[] readkey(String filename)
-    {
+    private static byte[] createSignature(byte[] aes_key) {
+
+    }
+
+    public static byte[] readkey(String filename) {
         try {
-            // Rewrite File
-            FileInputStream fos = new FileInputStream(filename)
-            int name_length = fos.read();
+            // Lesen eines RSA Schlüssel
+            DataInputStream inputStream = new DataInputStream((new FileInputStream(args[1])));
+            // Länge der Nachricht
+            int inhaber_laenge = inputStream.read();
+            byte[] inhaber_name = new byte[inhaber_laenge];
+            inputStream.read(inhaber_name, Integer.SIZE, inhaber_laenge);
+            int schluessel_laenge = inputStream.read();
+            byte[] schluessel = new byte[schluessel_laenge];
+            inputStream.read(schluessel, Integer.SIZE + inhaber_laenge, schluessel_laenge);
+            return schluessel;
 
-
-            fos.write(key.length);
-            fos.write(key);
-            fos.close();
-        } catch (IOException e)
-        {
-            System.err.print(e.toString() + ": "+filename);
-            System.exit(1);
-            return;
+        } catch (Exception e) {
         }
+
+        return null;
+    }
+
+    public static SecretKey createAES() {
+        try {
+
+            SecureRandom secureRandom = new SecureRandom();
+            byte[] randomkey = new byte[128];
+            secureRandom.nextBytes(randomkey);
+            return new SecretKeySpec(randomkey,"AES");
+
+        }
+        catch (Exception e) {}
         return null;
     }
 }

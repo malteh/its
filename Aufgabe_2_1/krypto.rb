@@ -1,4 +1,4 @@
-
+require 'matrix'
 # Aufgabe a
 def checkstring(s)
 	sum = 0
@@ -51,22 +51,26 @@ r = []
 	s.bytes.each do |char|
 		r << (char.getbyte 0)-('A'.getbyte 0)
 	end
-r.join
+r.permutation(2)
 end
 
-def enc_hill(message,key)
-vector = message*key
-vector_mod vector
+def is_invertable(matrix)
+(1/(matrix[0,0]*matrix[1,1]-matrix[0,1]*matrix[1,0])) != 0
 end
 
-def dec_hill(message,key)
-vector = message.inverse*key
-vector_mod vector
+
+"SOLVED".bytes.permutation(2).each do |p1,p2| 
+"GEZXDS".bytes.permutation(2).each do |c1,c2|
+a = p1[0] - ('A'.getbyte 0)
+b = p1[1] - ('A'.getbyte 0)
+c = p2[0] - ('A'.getbyte 0)
+d = p2[1] - ('A'.getbyte 0)
+matrix = Matrix[a,b,c,d]
+if is_invertable(matrix)
+if matrix.interse*Matrix[c1[0],c1[1],c2[0],c2[1]]==matrix
+puts "Found"
+end
+end
 end
 
-def vector_mod(vector)
-result=[]
-vector.each do |elem|
-	result << elem % 26
-result
 end

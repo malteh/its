@@ -56,7 +56,7 @@ public class RSAKeyCreation {
 
     public static KeyPair generateKeyPair() {
         try {
-            // als Algorithmus verwenden wir DSA
+            // als Algorithmus verwenden wir RSA
             KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
             gen.initialize(1024);
             return gen.generateKeyPair();
