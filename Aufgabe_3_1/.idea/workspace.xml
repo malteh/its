@@ -7,7 +7,7 @@
     <file path="/Main.java" changelist="4a146b9f-f390-48ce-8d22-de6dc3f0a95d" time="1369065994387" ignored="false" />
     <file path="/RSAKeyCreation.java" changelist="4a146b9f-f390-48ce-8d22-de6dc3f0a95d" time="1369854119397" ignored="false" />
     <file path="/Test.java" changelist="4a146b9f-f390-48ce-8d22-de6dc3f0a95d" time="1369074044075" ignored="false" />
-    <file path="/SSF.java" changelist="4a146b9f-f390-48ce-8d22-de6dc3f0a95d" time="1370203041049" ignored="false" />
+    <file path="/SSF.java" changelist="4a146b9f-f390-48ce-8d22-de6dc3f0a95d" time="1370203664073" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,10 +89,8 @@
       <file leaf-file-name="SSF.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/haw/its/SSF.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="84" selection-start="2383" selection-end="2383" vertical-scroll-proportion="0.81271285">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="2" column="33" selection-start="54" selection-end="54" vertical-scroll-proportion="0.03405221">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -636,10 +634,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/haw/its/SSF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="84" selection-start="2383" selection-end="2383" vertical-scroll-proportion="0.81271285">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="2" column="33" selection-start="54" selection-end="54" vertical-scroll-proportion="0.03405221">
+          <folding />
         </state>
       </provider>
     </entry>

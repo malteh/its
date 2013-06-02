@@ -1,14 +1,11 @@
 package de.haw.its;
 
 import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.LinkedList;
-import java.util.List;
+import java.nio.file.Files;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,11 +21,13 @@ public class SSF {
             System.exit(1);
         }
 
-        byte[] message = "TEST".getBytes();
-        byte[] private_key = readkey(args[1]);
-        byte[] public_key = readkey(args[2]);
+        //byte[] message = "TEST".getBytes();
+        byte[] private_key = readkey(args[2]);
+        byte[] public_key = readkey(args[3]);
+        byte[] message = Files.readAllBytes(args[4]);
+
         byte[] aes = createAES();
-        byte[] signature = createSignature( message);
+        signAndSaveMessage(message, private_key,public_key,args[5]);
 
 
 
@@ -37,7 +36,7 @@ public class SSF {
 
 
 
-    public void signAndSaveMessage(byte[] msg,byte[] p_key, byte[] public_key, String fileName) {
+    public static void signAndSaveMessage(byte[] msg,byte[] p_key, byte[] public_key, String fileName) {
 
 
         // als erstes erzeugen wir die Signatur
