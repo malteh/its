@@ -1,10 +1,12 @@
 package de.haw.its;
 
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.security.KeyFactory;
-import java.security.SecureRandom;
+import java.security.*;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,20 +24,96 @@ public class SSF {
             System.exit(1);
         }
 
+        byte[] message = "TEST".getBytes();
         byte[] private_key = readkey(args[1]);
         byte[] public_key = readkey(args[2]);
-        byte[] aes_key = createAES().getEncoded();
-        byte[] signature = createSignature(aes_key);
+        byte[] aes = createAES();
+        byte[] signature = createSignature( message);
 
 
 
     }
 
-    private static byte[] createSignature(byte[] aes_key) {
 
+
+
+    public void signAndSaveMessage(byte[] msg,byte[] p_key, byte[] public_key) {
+
+
+        // als erstes erzeugen wir die Signatur
+        Signature rsa = null;
+        byte[] signature = null;
+        try {
+            rsa = Signature.getInstance("SHA1withRSA");
+        } catch (NoSuchAlgorithmException ex) {
+           System.err.println("Keine Implementierung f�r SHA1withDSA!" + ex);
+        }
+
+        try {
+            // zum Signieren ben�tigen wir den geheimen Schl�ssel
+            assert rsa != null;
+            rsa.initSign(get_private_key_from_bytes(p_key));
+        } catch (InvalidKeyException ex) {
+            System.err.println("Falscher Schl�ssel!" + ex);
+        }
+
+        try {
+            rsa.update(msg);
+            signature = rsa.sign();
+        } catch (SignatureException ex) {
+            System.err.println("Fehler beim Signieren der Nachricht!" + ex);
+        }
+
+        // der �ffentliche Schl�ssel vom Schl�sselpaar
+        PublicKey pubKey = get_pubic_key_from_bytes(public_key);
+        // wir ben�tigen die Default-Kodierung
+        byte[] pubKeyEnc = pubKey.getEncoded();
+        System.out.println("Der Public Key wird in folgendem Format gespeichert: " + pubKey.getFormat());
+
+        try {
+            // eine Datei wird erzeugt und danach die Nachricht, die Signatur und
+            // der �ffentliche Schl�ssel darin gespeichert
+            DataOutputStream os = new DataOutputStream(new FileOutputStream(fileName));
+            os.writeInt(msg.length);
+            os.write(msg);
+            os.writeInt(signature.length);
+            os.write(signature);
+            os.writeInt(pubKeyEnc.length);
+            os.write(pubKeyEnc);
+            os.close();
+        } catch (IOException ex) {
+            System.err.println("Fehler beim Schreiben der signierten Nachricht."+ ex);
+        }
+        // Bildschirmausgabe
+        System.out.println("Erzeugte SHA1/DSA-Signatur: ");
+        for (int i = 0; i < signature.length; ++i) {
+            System.out.print(toHexString(signature[i]) + " ");
+        }
+        System.out.println();
     }
 
-    public static byte[] readkey(String filename) {
+
+    // Helper Methoden
+
+    private PrivateKey get_private_key_from_bytes(byte[] key)
+    {
+        try{ KeyFactory kf = KeyFactory.getInstance("RSA");
+            PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(key);
+            return kf.generatePrivate(ks);
+        } catch (Exception ex) {}
+        return null;
+    }
+
+    private PublicKey get_pubic_key_from_bytes(byte[] key)
+    {
+        try{ KeyFactory kf = KeyFactory.getInstance("RSA");
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(key);
+            return kf.generatePublic(ks);
+        } catch (Exception ex) {}
+        return null;
+    }
+
+    private static byte[] readkey(String filename) {
         try {
             // Lesen eines RSA Schlüssel
             DataInputStream inputStream = new DataInputStream((new FileInputStream(args[1])));
@@ -54,15 +132,12 @@ public class SSF {
         return null;
     }
 
-    public static SecretKey createAES() {
+    private static byte[] createAES() {
         try {
-
-            SecureRandom secureRandom = new SecureRandom();
-            byte[] randomkey = new byte[128];
-            secureRandom.nextBytes(randomkey);
-            return new SecretKeySpec(randomkey,"AES");
-
-        }
+            KeyGenerator gen = KeyGenerator.getInstance("AES");
+            gen.init(128);
+            return gen.generateKey().getEncoded();
+           }
         catch (Exception e) {}
         return null;
     }
