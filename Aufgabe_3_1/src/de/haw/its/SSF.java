@@ -37,7 +37,7 @@ public class SSF {
 
 
 
-    public void signAndSaveMessage(byte[] msg,byte[] p_key, byte[] public_key) {
+    public void signAndSaveMessage(byte[] msg,byte[] p_key, byte[] public_key, String fileName) {
 
 
         // als erstes erzeugen wir die Signatur
@@ -85,11 +85,7 @@ public class SSF {
             System.err.println("Fehler beim Schreiben der signierten Nachricht."+ ex);
         }
         // Bildschirmausgabe
-        System.out.println("Erzeugte SHA1/DSA-Signatur: ");
-        for (int i = 0; i < signature.length; ++i) {
-            System.out.print(toHexString(signature[i]) + " ");
-        }
-        System.out.println();
+        System.out.println("Done");
     }
 
 
